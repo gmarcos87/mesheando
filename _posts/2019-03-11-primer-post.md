@@ -2,7 +2,7 @@
 layout: post
 title: "OpenWrt, Libremesh y LUA"
 subtitle: "...por algún lado hay que comenzar"
-date: 2018-10-26 23:45:13 -0400
+date: 2019-03-13 23:45:13 -0400
 categories: Tutoriales
 author: Marcos
 ---
