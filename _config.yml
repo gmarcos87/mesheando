@@ -24,10 +24,11 @@ github_username: gmarcos87
 
 # Build settings
 markdown: kramdown
-remote_theme: BlackrockDigital/startbootstrap-clean-blog-jekyll
+remote_theme: gmarcos87/startbootstrap-clean-blog-jekyll
 
 plugins:
   - jekyll-feed
+  - jekyll-remote-theme
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
