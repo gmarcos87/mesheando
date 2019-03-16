@@ -18,17 +18,17 @@ email: gmarcos87@altermundi.net
 description: >- # this means to ignore newlines until "baseurl:"
   Desarrollo mesh, descentralización y redes comunitarias, cuando lo *nerd* es político.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://mesheando.net" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jsPixxel
 github_username: gmarcos87
 
 # Build settings
 markdown: kramdown
+theme: jekyll-theme-clean-blog
 remote_theme: gmarcos87/startbootstrap-clean-blog-jekyll
 
 plugins:
   - jekyll-feed
-  - jekyll-remote-theme
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
