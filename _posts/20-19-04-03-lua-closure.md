@@ -33,7 +33,7 @@ print(agregar_cinco(16)) -- 21
 
 ## Caso de uso
 
-Actualmente estoy colaborando con el desarrollo del Fist Boot Wizard de LibreMesh, un asistente que permite analizar las redes cercanas, elegir una y configurarse como parte de esa red. En caso de que no encuentre ninguna puede crear una de forma rápida y simple.
+Actualmente estoy colaborando con el desarrollo del [First Boot Wizard de LibreMesh](https://github.com/libremesh/lime-packages/tree/master/packages/first-boot-wizard), un asistente que permite analizar las redes cercanas, elegir una y configurarse como parte de esa red. En caso de que no encuentre ninguna puede crear una de forma rápida y simple.
 
 El objetivo es poder facilitar al máximo la creación y expansión de redes comunitarias. Agregar un nodo es prender, hacer tres clicks y listo, a disfrutar de la mesh.
 
@@ -450,5 +450,5 @@ Todas completamente reutilizables, testeables y aisladas de nuestro caso de uso 
 
 ## Queda trabajo por hacer
 En la versión en desarrollo se agregan dos cuestiones más, el ordenamiento debe tener en cuenta el canal y el modo en el que está el dispositivo (para no iniciar con un cambio que luego hay que volver a aplicar).
-Además, si observas la función splitBy el *loop for* puede ser reemplazado por un reduce, ese es un buen primer pull-request en LibreMesh, lo estaré esperando.
+Además, si observas la función splitBy el loop *for* puede ser reemplazado por un reduce, ese es un [**buen primer pull-request en LibreMesh**](https://github.com/libremesh/lime-packages/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22), lo estaré esperando.
 
