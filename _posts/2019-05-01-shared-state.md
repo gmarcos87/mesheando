@@ -12,18 +12,18 @@ background: "/assets/backgrounds/lime-lua-bg.jpg"
 Muches pensarían que la capa de coordinación entre los nodos se termina con el protocolo y que con eso ya es suficiente. Pero no, coordinar las direcciones de IP asignadas en los distintos nodos y compartir los nombres de los hosts en toda la red son dos tareas que exceden a los protocolos de ruteo mesh y que, valiéndose de ellos, se implementaron por separado.
 Aunque me conecte al nodo PepitoLibre y luego me vaya a JosefaLibre, quiero mantener mi dirección ip. Como también si tengo una compu con un servidor de películas, quiero que otres integrantes de la red puedan poner https://peliculas.lan y acceder sin tener que conocer el ip de esa computadora (algo como 10.13.128.53).
 
-Para eso (asignación de hosts en dnsmasq) utilizábamos Alfted, el mayordomo de Batman, en dos paquetes llamados [dnsmasq-distributed-hosts](https://github.com/libremesh/lime-packages/tree/master/packages/dnsmasq-distributed-hosts) y [dnsmasq-lease-share](https://github.com/libremesh/lime-packages/tree/master/packages/dnsmasq-lease-share).
+Para eso (asignación de hosts en dnsmasq) utilizábamos Alfred, el mayordomo de Batman, en dos paquetes llamados [dnsmasq-distributed-hosts](https://github.com/libremesh/lime-packages/tree/master/packages/dnsmasq-distributed-hosts) y [dnsmasq-lease-share](https://github.com/libremesh/lime-packages/tree/master/packages/dnsmasq-lease-share).
 Alfred tiene un esquema de distribución master-slave, en donde uno puede emitir o escuchar determinado id y recibir la información que el master coordina y envía. Luego, con esa información se puede hacer lo que se quiera, en este caso reconstruir las tablas de hosts de dnsmasq de toda la red en cada nodo.
 
 El problema es que Alfred falla mucho en nuestra escala de redes, además el esquema master-slave funciona sólo si la red es estable y puede asegurar la conectividad de los slave a los master. En QuintanaLibre no funcionó, el tamaño de la red impidió contar con un solo master, y cuando quisimos agregar más la red colapsó.
 A eso le sumamos la incapacidad de poder debuguear correctamente qué es lo que estaba pasando.
 
-Entonces, nos sentamos, discutimos un poco y nos decidimos por diseñar un sistema en el que la información fluya entre los nodos vecinos (a esto se lo llama gossip o chisme) y que, eventualmente, todos los nodos cuenten con la misma información, o algo parecido. El encargado de programarlo fue Gioacchino (Gio) y el resultado se llama shared-state.
+Entonces, nos sentamos, discutimos un poco y nos decidimos por diseñar un sistema en el que la información fluya entre los nodos vecinos (a esto se lo llama gossip o chisme) y que, eventualmente, todos los nodos cuenten con la misma información, o algo parecido. El encargado de programarlo fue G10h4ck (Gio) y el resultado se llama shared-state.
 
 ## Funcionamiento
 Podemos pensar a shared-state como una biblioteca. Tiene distintas estanterías, en donde cada una se encarga de una temática particular. En esas estanterías hay libros, cada uno tiene un código único. A su vez, cada libro posee autor, fecha de publicación y contenido. Espero que hasta acá, la metáfora se entienda. 
 
-![Ubatuba](/assets/posts/shared-state-estanterias.png){:class="center img-fluid"}
+![Screenshot](/assets/posts/shared-state-estanterias.png){:class="center img-fluid"}
 <span class="caption text-muted">/var/shared-state/data el hogar de las estanterías</span>
 
 Cuando shared-state quiere sincronizar su biblioteca busca otras bibliotecas a la vista (esto lo hace shared-state-get_candidates_neigh escaneando los clientes/nodos asociados) y le solicita las novedades de determinada estantería. 
@@ -36,12 +36,12 @@ Luego de este respetuoso diálogo (via HTTP y como json), shared-state puede com
 - Si no tengo el libro con ese código único lo agrego a la estantería de mi biblioteca.
 - Si ya tengo un libro con ese código único, guardo el que tenga la fecha de publicación mas reciente y tiro el viejo
 
-Además, existen dos elementos más: la publicación y los hooks. La publicación es la forma en que los datos llegan a shared-state, son scripts que le inyectan la información. Por ejemplo, el script de [hosts de dnsmasq](https://github.com/libremesh/lime-packages/tree/master/packages/shared-state-dnsmasq_hosts) analiza los registros del nodo, los transforma en un json y lo envía a shared-state. A cada uno de estos contenidos, shared-state le asigna un código único, fecha de publicación y autor. Esos contenidos ya están listos para circular. Los hooks corren en el sentido inverso, luego de que shared-state actualiza determinada estantería de la biblioteca, va y busca a todos aquellos que quieran escuchar las novedades y se las notifica. En el ejemplo de dnsmasq, lo que sucede es que con el nuevo json reconstruye los archivos de hosts y direcciones IPs asignadas, luego reinicia a dnsmasq para que tome la nueva configuración. En otras palabras: publicación y hooks, entrada y salida de información entre el sistema y shared-state.
+Además, existen dos elementos más: la publicación y los hooks. La publicación es la forma en que los datos llegan a shared-state, son scripts que le inyectan la información. Por ejemplo, el script de [hosts de dnsmasq](https://github.com/libremesh/lime-packages/tree/master/packages/shared-state-dnsmasq_hosts) analiza los registros del nodo, los transforma en un json y lo envía a shared-state. A cada uno de estos contenidos, shared-state le asigna un código único, fecha de publicación y autor. Esos contenidos ya están listos para circular. Los hooks corren en el sentido inverso, luego de que shared-state actualiza determinada estantería de la biblioteca, va y busca a todos aquellos que quieran escuchar las novedades y se las notifica. En el ejemplo de dnsmasq, lo que sucede es que con el nuevo json reconstruye los archivos de hosts y direcciones IPs asignadas, luego le indica a dnsmasq que tome la nueva configuración. En otras palabras: publicación y hooks, entrada y salida de información entre el sistema y shared-state.
 
 ## Pirania, y los vouchers distribuidos
 [Pirania](https://github.com/libremesh/pirania/) es el sistema de portal cautivo con acceso a internet vía vouchers, que estamos programando en AlterMundi. Decidimos hacer distribuida la tabla de códigos entre todos los nodos y para ello usamos shared-state.
 
-![Ubatuba](/assets/posts/pirania-logo.png){:class="center img-fluid"}
+![Logo de Pirania](/assets/posts/pirania-logo.png){:class="center img-fluid"}
 <span class="caption text-muted">Solución de Voucher y Portal Cautivo para redes comunitarias</span>
 
 La particularidad que tiene [shared-state-pirania](https://github.com/libremesh/lime-packages/tree/master/packages/shared-state-pirania) (como plugin para shared-state) es que, no solo necesitamos agregar datos sino también editar los existentes.
