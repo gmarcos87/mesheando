@@ -14,9 +14,9 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: mesheando fuera del tarro
-email: gmarcos87@altermundi.net
+email: gmarcos@altermundi.net
 description: >- # this means to ignore newlines until "baseurl:"
-  Desarrollo mesh, descentralización y redes comunitarias, cuando lo *nerd* es político.
+  Desarrollo mesh, descentralización y redes comunitarias, cuando lo *nerd* es polí­tico.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://mesheando.net" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jsPixxel
