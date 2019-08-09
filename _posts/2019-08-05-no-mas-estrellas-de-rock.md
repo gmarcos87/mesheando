@@ -7,6 +7,7 @@ categories: Articulos
 author: Marcos
 background: "/assets/backgrounds/bg-desnudos.jpg"
 ---
+
 Este es un texto originalmente publicado en Internet con el título "No more rock stars". 
 Forma parte de las recomendaciones de comportamiento en el evento OurNetworks, luego de leerlo decidí traducirlo y compartirlo en español a todes les cumpes.
 
@@ -14,8 +15,6 @@ La descripción completa del rockstart puede ser difícil de encontrar en una so
 Al enano machirulo, facho y abusivo mejor no dejarlo crecer, y menos aún alimentarlo en nuestras organizaciones.
 
 > Nota: me tomé la libertad de reemplazar la palabra líder por referente, que se acerca más a la realidad de las organizaciones que frecuento y que suele tener un tinte menos negativo que el término original.
-
-_____
 
 # No más estrellas de rock
 
