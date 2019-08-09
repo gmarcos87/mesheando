@@ -136,3 +136,4 @@ Preferiríamos que la gente no se ponga en contacto con nosotros para revelar su
 
 ## Créditos
 Este artículo fue escrito por Valerie Aurora (@vaurorapub), Mary Gardiner (@me_gardiner), y Leigh Honeywell (@hypatiadotca), con agradecimiento por los comentarios y sugerencias de muchos revisores anónimos.
+[Ilustración de pxhere](https://pxhere.com/es/photo/1402145)
