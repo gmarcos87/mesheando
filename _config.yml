@@ -43,4 +43,6 @@ plugins:
 #   - vendor/gems/
 #   - vendor/ruby/
 
+include: [".well-known"]
+
 permalink: /:categories/:title/
